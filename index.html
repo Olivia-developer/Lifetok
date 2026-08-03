@@ -241,7 +241,7 @@ function loadPosts(){const feed=document.getElementById('feed');feed.innerHTML=s
 ${p.media?`<img src="${p.media}">`:''}
 <div class="post-actions">
 <button class="action-btn" onclick="this.innerText='❤️ '+(++p.likes)">❤️ ${p.likes}</button>
-<button class="action-btn" onclick="alert('Comment box opened')">💬 Comment</button>
+<button class="action-btn" onclick="document.getElementById('comments-${p.id}').style.display='block'">💬 Comment</button>
 <button class="action-btn" onclick="alert('Shared!')">📤 Share</button>
 <button class="action-btn" onclick="alert('Reposted!')">🔁 Repost</button>
 <button class="action-btn" onclick="alert('Downloaded!')">⬇️ Download</button>
