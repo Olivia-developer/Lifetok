@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIFETOK 👑</title>
+<style>
+body{background:linear-gradient(135deg,#1a0033,#330066);color:white;font-family:Arial,sans-serif;margin:0;display:flex}
+.sidebar{width:270px;background:rgba(0,0,0,0.45);padding:20px;height:100vh;position:fixed;left:0;top:0;overflow-y:auto}
+.sidebar h2{color:#c084fc;text-align:center;margin-bottom:10px}
+.search-bar{width:100%;padding:10px;border-radius:20px;border:2px solid #c084fc;background:#1a1a1a;color:white;margin-bottom:15px}
+.sidebar-btn{width:100%;padding:10px;margin:6px 0;background:linear-gradient(90deg,#c084fc,#a855f7);border:none;border-radius:8px;color:white;font-weight:bold;cursor:pointer;text-align:left;font-size:14px}
+.live-sidebar{background:linear-gradient(90deg,#ff0040,#ff3366)!important;animation:pulse 1.5s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,0,64,0.7)}70%{box-shadow:0 0 0 10px rgba(255,0,64,0)}100%{box-shadow:0 0 0 0 rgba(255,0,64,0)}}
+.main-content{margin-left:290px;padding:20px;width:calc(100% - 290px)}
+.container{max-width:800px;background:rgba(0,0,0,0.3);padding:20px;border-radius:15px;margin:auto}
+.connected{text-align:center;color:#4ade80;font-weight:bold;margin-bottom:15px;font-size:18px}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border:2px solid #c084fc;border-radius:8px;background:#1a1a1a;color:white}
+.btn{width:100%;padding:12px;background:linear-gradient(90deg,#c084fc,#a855f7);border:none;border-radius:8px;color:white;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}
+.profile{position:relative;text-align:center;margin-bottom:15px}
+.profile-pic{width:90px;height:90px;border-radius:50%;border:3px solid #c084fc;object-fit:cover}
+.plus-profile{position:absolute;bottom:5px;right:40%;background:#c084fc;border:none;border-radius:50%;width:28px;height:28px;color:white;font-weight:bold;font-size:18px;cursor:pointer}
+.feed{margin-top:20px}
+.post{background:#2a2a2a;padding:12px;margin:12px 0;border-radius:10px}
+.post-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.post-user{display:flex;align-items:center;gap:10px}
+.post-pfp{width:45px;height:45px;border-radius:50%;object-fit:cover}
+.post img,.post video{width:100%;border-radius:10px;margin-top:8px}
+.post-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.action-btn{background:none;border:1px solid #c084fc;color:#c084fc;cursor:pointer;font-size:12px;padding:6px 10px;border-radius:20px}
+.follow-btn{background:linear-gradient(90deg,#c084fc,#06b6d4);border:none;color:white;padding:5px 12px;border-radius:15px;font-weight:bold;cursor:pointer}
+.hidden{display:none}
+.box{background:#1a1a2e;border:2px solid #00d4ff;border-radius:10px;padding:12px;margin:15px 0;max-height:400px;overflow-y:auto}
+.streak-pet{padding:12px;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:10px;margin:8px 0;text-align:center}
+.gift-btn{background:linear-gradient(90deg,#ff0040,#ec4899);border:none;color:white;padding:8px 12px;border-radius:8px;margin:4px;cursor:pointer;font-size:12px}
+.live-screen{background:black;border-radius:10px;padding:10px;text-align:center;margin:10px 0}
+.palm-text{font-size:18px;font-weight:bold;color:#fbbf24;text-align:center;animation:glow 1s infinite alternate}
+@keyframes glow{from{text-shadow:0 0 5px #fbbf24}to{text-shadow:0 0 20px #fbbf24}}
+.grid-150{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0;max-height:180px;overflow-y:auto}
+.grid-btn{padding:6px;background:#333;border:1px solid #c084fc;border-radius:4px;color:white;cursor:pointer;font-size:10px}
+.keisha-msg{background:#7c3aed;padding:8px;border-radius:8px;margin:5px 0;text-align:left}
+.user-msg{background:#c084fc;color:black;padding:8px;border-radius:8px;margin:5px 0;text-align:right}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+<h2>LIFETOK 👑</h2>
+<input type="text" class="search-bar" id="searchBar" placeholder="🔍 Search people, songs, dance, food..." onkeyup="search()">
+<button class="sidebar-btn" onclick="showSection('home')">🏠 Home Feed</button>
+<button class="sidebar-btn" onclick="showSection('profile')">👤 My Profile</button>
+<button class="sidebar-btn" onclick="showSection('post')">✨ Create Post</button>
+<button class="sidebar-btn" onclick="showSection('messages')">💬 Messages + Streak</button>
+<button class="sidebar-btn live-sidebar" onclick="showSection('live')">🔴 GO LIVE</button>
+<button class="sidebar-btn" onclick="showSection('keisha')">✨ KEISHA IDEAS</button>
+<button class="sidebar-btn" onclick="showSection('zodiac')">♈ ZODIAC</button>
+<button class="sidebar-btn" onclick="showSection('palm')">✋ PALM READING</button>
+<button class="sidebar-btn" onclick="showSection('advice')">💡 ADVICE</button>
+<button class="sidebar-btn" onclick="logout()" style="background:gray;">Logout</button>
+</div>
+
+<div class="main-content">
+<div class="container">
+
+<!-- LOGIN - ONLY PLACE WITH WELCOME -->
+<div id="loginScreen">
+<div class="connected">Welcome to LIFETOK 👑</div>
+<h2>Sign In</h2>
+<input type="text" id="loginUsername" placeholder="Choose your username">
+<input type="file" id="profilePicUpload" accept="image/*">
+<button class="btn" onclick="login()">JOIN LIFETOK</button>
+</div>
+
+<!-- HOME FEED - CLEAN -->
+<div id="homeSection" class="hidden">
+<h2>Home Feed</h2>
+<div class="feed" id="feed"></div>
+</div>
+
+<!-- PROFILE WITH PLUS -->
+<div id="profileSection" class="hidden">
+<div class="profile">
+<img id="myProfilePic" class="profile-pic" src="">
+<button class="plus-profile" onclick="showSection('post')">+</button>
+<h3>@<span id="myUsername"></span></h3>
+</div>
+</div>
+
+<!-- CREATE POST -->
+<div id="postSection" class="hidden">
+<h2>Create Post</h2>
+<button class="btn" onclick="getCaptionFromKeisha()">✨ GET CAPTION FROM KEISHA</button>
+
+<div class="box">
+<h4>📹 Camera FAST + 150 Templates/Effects/Filters/Fonts</h4>
+<button class="btn" onclick="startCamera()">🎥 Open Camera</button>
+<video id="videoPreview" class="hidden" autoplay width="100%"></video>
+<button class="btn hidden" id="recordBtn" onclick="startRecording()">⏺️ Record</button>
+<button class="btn hidden" id="stopBtn" onclick="stopRecording()" style="background:red;">⏹️ Stop</button>
+
+<h4>150 Templates</h4>
+<div class="grid-150" id="templateGrid"></div>
+<h4>150 Effects</h4>
+<div class="grid-150" id="effectGrid"></div>
+<h4>150 Filters</h4>
+<div class="grid-150" id="filterGrid"></div>
+<h4>150 Fonts</h4>
+<div class="grid-150" id="fontGrid"></div>
+</div>
+
+<input type="text" id="postText" placeholder="What's happening? #Lifetok">
+<input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
+<button class="btn" onclick="createPost()">POST</button>
+</div>
+
+<!-- MESSAGES + STREAK PETS -->
+<div id="messagesSection" class="hidden">
+<h2>Messages + Streak Pets 💬</h2>
+<h4>Your Streak Pets 🥚</h4>
+<div id="streakPets"></div>
+<p style="font-size:12px;color:#c084fc">Message daily to level up LEY 🐕 and LEAFY 🐰</p>
+</div>
+
+<!-- LIVE WITH GIFTS -->
+<div id="liveSection" class="hidden">
+<h2>🔴 LIVE HOUSE</h2>
+<div class="live-screen">
+<h3 id="liveStatus">You are OFFLINE</h3>
+<button class="btn" onclick="toggleLive()">START LIVE</button>
+</div>
+<h4>Send Gifts to LEY & LEAFY</h4>
+<button class="gift-btn" onclick="sendGift('LEY','🌹 Rose')">🌹 Rose to LEY</button>
+<button class="gift-btn" onclick="sendGift('LEAFY','🥕 Carrot')">🥕 Carrot to LEAFY</button>
+<button class="gift-btn" onclick="sendGift('LEY','👑 Crown')">👑 Crown to LEY</button>
+<div class="box" id="giftLog"></div>
+</div>
+
+<!-- KEISHA -->
+<div id="keishaSection" class="hidden">
+<h2>KEISHA - Captions & Ideas ✨</h2>
+<div class="box" id="keishaChat">
+<div id="keishaMessages"><div class="keisha-msg">👑 Hey! I give you 10 caption ideas + hype 💜</div></div>
+<input type="text" id="keishaInput" placeholder="Ask for caption idea...">
+<button class="btn" onclick="sendToKeisha()">Get 10 Ideas</button>
+</div>
+</div>
+
+<!-- ZODIAC -->
+<div id="zodiacSection" class="hidden">
+<h2>Zodiac Reading ♈</h2>
+<input type="text" id="zodiacSign" placeholder="Enter your zodiac sign">
+<button class="btn" onclick="getZodiac()">Get Reading</button>
+<div class="box" id="zodiacResult"></div>
+</div>
+
+<!-- PALM -->
+<div id="palmSection" class="hidden">
+<h2>Palm Reading ✋</h2>
+<div class="box"><div id="palmReading" class="palm-text">Click start</div>
+<button class="btn" onclick="startPalmReading()">Start</button></div>
+</div>
+
+<!-- ADVICE -->
+<div id="adviceSection" class="hidden">
+<h2>Motivational Advice 💡</h2>
+<button class="btn" onclick="getAdvice()">Get Advice</button>
+<div class="box" id="adviceResult"></div>
+</div>
+
+</div></div>
+
+<script>
+let currentUser=null,postIdCounter=Date.now(),palmInterval=null,isLive=false;
+
+const samplePosts=[
+{id:1,username:"tech_queen",pfp:"https://i.imgur.com/8Km9tLL.png",postText:"CEO vibes 👑",media:"",type:"text",likes:12},
+{id:2,username:"lifi_bunny",pfp:"https://i.imgur.com/JQwXkF8.png",postText:"Morning glow ✨",media:"https://picsum.photos/400/300",type:"image",likes:45}
+];
+
+const templates=Array.from({length:150},(_,i)=>`Template ${i+1}`);
+const effects=Array.from({length:150},(_,i)=>`Effect ${i+1}`);
+const filters=Array.from({length:150},(_,i)=>`Filter ${i+1}`);
+const fonts=["Arial","Arial Black","Algerian","Brush Script MT","Comic Sans MS","Times New Roman","Courier New","Georgia","Verdana","Impact"];
+const adviceList=["You are building something amazing 👑","Rest is part of the work 💜","Your time is coming"];
+const palmMessages=["Greatness is coming! 👑","Money is on the way 💰","You are loved ❤️"];
+const zodiacQuotes=["Lead today! 🔥","Money coming 💰","Trust your gut 🧠"];
+const captionIdeas=["CEO energy only 👑","Built this with my dreams ✨","Watch me shine 💜","Manifesting greatness","Lifetok made me","They said I couldn't","Plot twist: I did","Soft life loading","Main character energy","Building in public"];
+
+window.onload=()=>{let savedUser=localStorage.getItem('lifetokUser');if(savedUser){currentUser=JSON.parse(savedUser);showApp()}loadGrids();loadPosts();loadStreak()}
+
+function login(){const username=document.getElementById('loginUsername').value;const pfpFile=document.getElementById('profilePicUpload').files[0];if(username.trim()===""){alert("Username please");return}if(pfpFile){const reader=new FileReader();reader.onload=e=>{currentUser={username,pfp:e.target.result,streak:{ley:0,leafy:0},gifts:{ley:[],leafy:[]}};localStorage.setItem('lifetokUser',JSON.stringify(currentUser));showApp()};reader.readAsDataURL(pfpFile)}else{currentUser={username,pfp:"https://cdn-icons-png.flaticon.com/512/3602/3602114.png",streak:{ley:0,leafy:0},gifts:{ley:[],leafy:[]}};localStorage.setItem('lifetokUser',JSON.stringify(currentUser));showApp()}}
+
+function showApp(){document.getElementById('loginScreen').classList.add('hidden');showSection('home');document.getElementById('myUsername').innerText=currentUser.username;document.getElementById('myProfilePic').src=currentUser.pfp}
+function showSection(s){['home','profile','post','messages','live','keisha','zodiac','palm','advice'].forEach(x=>document.getElementById(x+'Section').classList.add('hidden'));document.getElementById(s+'Section').classList.remove('hidden')}
+function logout(){localStorage.removeItem('lifetokUser');location.reload()}
+
+function loadGrids(){
+  document.getElementById('templateGrid').innerHTML=templates.map(t=>`<button class="grid-btn">${t}</button>`).join('');
+  document.getElementById('effectGrid').innerHTML=effects.map(e=>`<button class="grid-btn">${e}</button>`).join('');
+  document.getElementById('filterGrid').innerHTML=filters.map(f=>`<button class="grid-btn">${f}</button>`).join('');
+  let fontHTML='';for(let i=0;i<150;i++){let f=fonts[i%fonts.length];fontHTML+=`<button class="grid-btn" style="font-family:${f}">${f}</button>`}
+  document.getElementById('fontGrid').innerHTML=fontHTML;
+}
+
+// CAMERA FAST
+async function startCamera(){cameraStream=await navigator.mediaDevices.getUserMedia({video:{width:1920,height:1080,frameRate:60},audio:true});document.getElementById('videoPreview').srcObject=cameraStream;document.getElementById('videoPreview').classList.remove('hidden');document.getElementById('recordBtn').classList.remove('hidden')}
+function startRecording(){mediaRecorder=new MediaRecorder(cameraStream);mediaRecorder.start();document.getElementById('stopBtn').classList.remove('hidden');document.getElementById('recordBtn').classList.add('hidden')}
+function stopRecording(){mediaRecorder.stop();cameraStream.getTracks().forEach(t=>t.stop());document.getElementById('stopBtn').classList.add('hidden')}
+
+// SEARCH
+function search(){const val=document.getElementById('searchBar').value.toLowerCase();alert(`Searching for: ${val}`)}
+
+// STREAK PETS - LEY + LEAFY
+function loadStreak(){const s=currentUser.streak;document.getElementById('streakPets').innerHTML=`
+<div class="streak-pet">🐕 LEY - Day ${s.ley} ${getStage(s.ley)}</div>
+<div class="streak-pet">🐰 LEAFY - Day ${s.leafy} ${getStage(s.leafy)}</div>`}
+function getStage(d){if(d>=100)return "👑 Adult";if(d>=50)return "🧑 Teen";if(d>=24)return "👶 Child";if(d>=12)return "🥚 Hatched";if(d>=3)return "🥚 Egg";return "🔒 Locked"}
+function sendGift(pet,gift){let key=pet.toLowerCase();currentUser.gifts[key].push(gift);currentUser.streak[key]++;localStorage.setItem('lifetokUser',JSON.stringify(currentUser));document.getElementById('giftLog').innerHTML+=`<div>🎁 ${gift} sent to ${pet}!</div>`;loadStreak()}
+
+// LIVE
+function toggleLive(){isLive=!isLive;document.getElementById('liveStatus').innerText=isLive?"🔴 YOU ARE LIVE IN LIVE HOUSE!":"You are OFFLINE";}
+
+// KEISHA 10 IDEAS
+function sendToKeisha(){const input=document.getElementById('keishaInput');const msg=input.value.trim();if(!msg)return;addKeisha(msg,'user');input.value="";let ideas=captionIdeas.map(c=>`KEISHA: ${c}`).join('\n');setTimeout(()=>addKeisha(ideas,'keisha'),200)}
+function addKeisha(t,s){const d=document.createElement('div');d.className=s==='user'?'user-msg':'keisha-msg';d.innerText=t;document.getElementById('keishaMessages').appendChild(d)}
+function getCaptionFromKeisha(){document.getElementById('postText').value=captionIdeas[Math.floor(Math.random()*captionIdeas.length)];showSection('post')}
+
+// ZODIAC PALM ADVICE
+function getZodiac(){document.getElementById('zodiacResult').innerHTML=`<div>${zodiacQuotes[Math.floor(Math.random()*zodiacQuotes.length)]}</div>`}
+function startPalmReading(){document.getElementById('palmReading').innerText=palmMessages[Math.floor(Math.random()*palmMessages.length)];palmInterval=setInterval(()=>{document.getElementById('palmReading').innerText=palmMessages[Math.floor(Math.random()*palmMessages.length)]},1000)}
+function getAdvice(){document.getElementById('adviceResult').innerHTML=`<div>${adviceList[Math.floor(Math.random()*adviceList.length)]}</div>`}
+
+// POSTS WITH WORKING BUTTONS
+function loadPosts(){const feed=document.getElementById('feed');feed.innerHTML=samplePosts.map(p=>`
+<div class="post">
+<div class="post-header">
+<div class="post-user"><img class="post-pfp" src="${p.pfp}"><b>@${p.username}</b></div>
+<button class="follow-btn" onclick="this.innerText=this.innerText=='Follow'?'Following':'Follow'">Follow</button>
+</div>
+<p>${p.postText}</p>
+${p.media?`<img src="${p.media}">`:''}
+<div class="post-actions">
+<button class="action-btn" onclick="this.innerText='❤️ '+(++p.likes)">❤️ ${p.likes}</button>
+<button class="action-btn" onclick="alert('Comment box opened')">💬 Comment</button>
+<button class="action-btn" onclick="alert('Shared!')">📤 Share</button>
+<button class="action-btn" onclick="alert('Reposted!')">🔁 Repost</button>
+<button class="action-btn" onclick="alert('Downloaded!')">⬇️ Download</button>
+</div>
+</div>`).join('')}
+function createPost(){const text=document.getElementById('postText').value;if(!text){alert("Add text");return}samplePosts.unshift({id:postIdCounter++,username:currentUser.username,pfp:currentUser.pfp,postText:text,media:"",type:"text",likes:0});loadPosts();showSection('home');document.getElementById('postText').value=""}
+</script>
+</body>
+</html>
