@@ -246,7 +246,15 @@ ${p.media?`<img src="${p.media}">`:''}
 <button class="action-btn" onclick="alert('Reposted!')">🔁 Repost</button>
 <button class="action-btn" onclick="alert('Downloaded!')">⬇️ Download</button>
 </div>
-</div>`).join('')}
+</div>`).join('')} 
+function addComment(postId){
+  const input = document.getElementById('input-'+postId);
+  const text = input.value;
+  if(!text){ alert("Type something first!"); return; }
+  document.getElementById('comment-list-'+postId).innerHTML += `<p>💬 ${text}</p>`;
+  input.value = "";
+}
+  
 function createPost(){const text=document.getElementById('postText').value;if(!text){alert("Add text");return}samplePosts.unshift({id:postIdCounter++,username:currentUser.username,pfp:currentUser.pfp,postText:text,media:"",type:"text",likes:0});loadPosts();showSection('home');document.getElementById('postText').value=""}
 </script>
 </body>
