@@ -240,11 +240,11 @@ function loadPosts(){const feed=document.getElementById('feed');feed.innerHTML=s
 <p>${p.postText}</p>
 ${p.media?`<img src="${p.media}">`:''}
 <div class="post-actions">
-<button class="action-btn" onclick="this.innerText='❤️ '+(++p.likes)">❤️ ${p.likes}</button>
-<button class="action-btn" onclick="document.getElementById('comments-${p.id}').style.display='block'">💬 Comment</button>
-<button class="action-btn" onclick="alert('Shared!')">📤 Share</button>
-<button class="action-btn" onclick="alert('Reposted!')">🔁 Repost</button>
-<button class="action-btn" onclick="alert('Downloaded!')">⬇️ Download</button>
+<button class="action-btn" ontouchstart="this.innerText='❤️ '+(++p.likes)" onclick="this.innerText='❤️ '+(++p.likes)">❤️ ${p.likes}</button>
+<button class="action-btn" ontouchstart="document.getElementById('comments-${p.id}').style.display='block'" onclick="document.getElementById('comments-${p.id}').style.display='block'">💬 Comment</button>
+<button class="action-btn" ontouchstart="navigator.share?navigator.share({title:'LIFETOK',text:p.postText}):alert('Shared!')" onclick="navigator.share?navigator.share({title:'LIFETOK',text:p.postText}):alert('Shared!')">📤 Share</button>
+<button class="action-btn" ontouchstart="alert('Reposted!')" onclick="alert('Reposted!')">🔄 Repost</button>
+<button class="action-btn" ontouchstart="alert('Downloaded!')" onclick="alert('Downloaded!')">⬇️ Download</button>
 </div>
 </div>`).join('')} 
 function addComment(postId){
